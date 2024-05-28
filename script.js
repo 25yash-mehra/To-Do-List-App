@@ -1,39 +1,48 @@
 const confirmBtn = document.getElementById("confirmBtn");
 const form = document.getElementById("form");
+const textDiv = document.getElementById("text");
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 });
+
 confirmBtn.addEventListener("click", () => {
   let textData = document.getElementById("textInput").value;
   if (textData.trim().length === 0) {
-    alert("ache se bhar");
+    alert("Please fill out the field");
     return;
   }
-  let ele = document.createElement("h1");
-  let textnode = document.createTextNode(textData);
-  ele.appendChild(textnode);
-  document.getElementById("text").appendChild(ele);
-  document.getElementById("textInput").value = " ";
-  let done = document.createElement("button");
-  let doneText = document.createTextNode("done");
-  done.appendChild(doneText);
-  document.getElementById("text").appendChild(done);
-  done.addEventListener("click", () => {
-    ele.style.textDecoration = "line-through";
-    ele.style.color = "red";
+
+  let taskDiv = document.createElement("div");
+  taskDiv.classList.add("task");
+
+  let taskText = document.createElement("span");
+  taskText.textContent = textData;
+  taskDiv.appendChild(taskText);
+
+  let doneBtn = document.createElement("button");
+  doneBtn.classList.add("done");
+  doneBtn.textContent = "Done";
+  taskDiv.appendChild(doneBtn);
+
+  let deleteBtn = document.createElement("button");
+  deleteBtn.classList.add("delete");
+  deleteBtn.textContent = "Delete";
+  taskDiv.appendChild(deleteBtn);
+
+  textDiv.appendChild(taskDiv);
+  document.getElementById("textInput").value = "";
+
+  doneBtn.addEventListener("click", () => {
+    taskText.style.textDecoration = "line-through";
+    taskText.style.color = "red";
   });
-  let button = document.createElement("button");
-  let delbutton = document.createTextNode("delet");
-  button.appendChild(delbutton);
-  document.getElementById("text").appendChild(button);
-  button.addEventListener("click", () => {
-    ele.remove();
-    button.remove();
-    done.remove();
+
+  deleteBtn.addEventListener("click", () => {
+    taskDiv.remove();
   });
+
   document.getElementById("clear").addEventListener("click", () => {
-    ele.remove();
-    button.remove();
-    done.remove();
+    taskDiv.remove();
   });
 });
